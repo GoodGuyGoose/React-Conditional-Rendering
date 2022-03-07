@@ -1,10 +1,14 @@
+import { render } from '@testing-library/react'
 import React, { useState } from 'react'
+import './styles.css'
 
 
-// CHANGE THE NAME CONST FROM EMPTY TO FULL STRING TO SEE THE CONTIDITIONALS IN ACTION
+
+
 //--------------------------------------------------------------
- let name = ""
-
+// CHANGE THE name VARIABLE FROM EMPTY TO FULL STRING TO SEE THE CONTIDITIONALS IN ACTION
+//--------------------------------------------------------------
+ let name = "Sam"
 
  function Name() {
    return (
@@ -18,34 +22,43 @@ import React, { useState } from 'react'
 // CONDITIONAL RENDERING WITH CLASSIC IF/ELSE STATEMENT
 //--------------------------------------------------------------
 
-// export default function App() {
-//   if(name === "") {
-//     return <h3>name is empty string!</h3>
-//   } 
-//   else {
-//     return (
-//       <div className="App">
-//         <Name />
-//       </div>
-//     )
-//   }
-// }
+export default function App() {
+
+  if(name === "") {
+    return <h3>name is empty string!</h3>
+  }
+
+  else {
+    return (
+      <div className="App">
+        <Name />
+      </div>
+    )
+  }
+}
 
 //--------------------------------------------------------------
 // WE CAN WRITE ALMOST THE EXACT SAME CODE BUT WITH A GUARD CLAUSE TO MAKE IT A BIT CLEANER
 //--------------------------------------------------------------
+// name = ''
 
 // function App() {
-//   if(name === "") {return <h3>Other conditional render</h3>}
+//   if(!name) {return <h3>Guard Clause render -- name is missing</h3>}
+//   if(name === "Bill") {return <h3>This is the render for billiboy</h3>}
+
 //   return (
 //     <div className="App">
 //       <Name />
+//       <h3>This becomes default if no gaurd clauses are true</h3>
 //     </div>
 //   )
 // }
 
 // export default App;
 
+//--------------------------------------------------------------
+// NOTE: the above examples are bad practice.  Can anyone tell me why?
+//--------------------------------------------------------------
 //--------------------------------------------------------------
 // USE A CONDITIONAL TO SET A VARIABLE TO BE RENDERED LATER
 //--------------------------------------------------------------
@@ -54,11 +67,15 @@ import React, { useState } from 'react'
 // function App() {
 //   let renderedVar = null
 
-//   if(name === "") {
-//     renderedVar = <p style={{color: "red"}}>there was an error </p>
+//   name = 'Sam'
+
+
+//   if(!name) {
+//     renderedVar = <h2 style={{color: "red"}}>there was an error </h2>
 //   } else {
-//     renderedVar = <Name />
+//     renderedVar = <h3><Name /><h3>This our our variable to be rendered</h3></>
 //   }
+
 
 //   return (
 //     <div className="App">
@@ -75,12 +92,13 @@ import React, { useState } from 'react'
 // WILL EXECUTE THE CODE WHICH COMES AFTER 
 //--------------------------------------------------------------
 
-// name = ''
+// name = "Sam"
 
 // function App() {
+  
 //   return (
 //     <div className="App">
-//       {name === "" ? <h3>No Name</h3> : <Name />}
+//       {name ? <Name /> : <h3>No Name</h3> }
 //     </div>
 //   )
 // }
@@ -90,13 +108,19 @@ import React, { useState } from 'react'
 //--------------------------------------------------------------
 // WE CAN CHAIN THESE TERNARIES TO CHECK MULTIPLE "IF" CONDITIONALS BEFORE HAVING AN "ELSE" CONDITION AT THE END
 //--------------------------------------------------------------
-// name = ""
+
+// name = ''
 // function App() {
+
 //   return (
 //     <div className="App">
-//       {name === "" ? <h3>For god's sake please add a name</h3> : 
-//        name === "Gustav" ? <div><Name /><h1>What a guy!!!</h1></div> :
-//        <Name />}
+//       {
+//         !dataLoaded ? 
+//         <h2>For god's sake please add a name</h2> : 
+//         name === "Gustav" ? 
+//         <div><Name /><h1>What a guy!!!</h1></div> :
+//         <Name />
+//       }
 //     </div>
 //   )
 // }
@@ -106,41 +130,29 @@ import React, { useState } from 'react'
 //--------------------------------------------------------------
 // HAVING LOTS OF TURNARIES CAN MAKE IT DIFFICULT TO READ OUT JSX, TO FIX THIS WE CAN BUILD SUBCOMPONENTS
 // IS IS ALSO VERY USEFUL WHEN RERENDERING A PORTION OF OUR PAGE BUT NOT ALL OF IT
-//--------------------------------------------------------------
+// --------------------------------------------------------------
 
-// name="Sam"
 
 // function App() {
 //   return (
 //     <div className="App">
-//       {name !== "" ? <NameSection  name={name}/> : <h3>This is getting ridiculous</h3>}
+//       {isLoaded ? <NameSection  data={pokeData} /> : null}
 //     </div>
 //   )
 // }
 
-// const NameSection = ({name}) => {
+// const NameSection = ({data}) => {
 //   return (
 //     <>
-//       {name === "Oystien" ? 
+//       {discription ? 
+      
 //         <div>
-//           <Name />
+//           <h1>{data.name}</h1>
 //           <h1>What a guy!!!</h1>
-//           <p>Decide to want nothing to do with my owner today purrr purr littel cat, 
-//           little cat purr purr, and licks paws and jump around on couch, 
-//           meow constantly until given food, . Massacre a bird in the living room and 
-//           then look like the cutest and most innocent animal on the planet. Walk on 
-//           keyboard run up and down stairs so prow?? ew dog you drink from the toilet, 
-//           yum yum warm milk hotter pls, ouch too hot sit and stare for eat prawns 
-//           daintily with a claw then lick paws clean wash down prawns with a lap of 
-//           carnation milk then retire to the warmest spot on the couch to claw at the 
-//           fabric before taking a catnap so i is not fat, i is fluffy for what the 
-//           heck just happened, something feels fishy.  </p>
-//           <p>lorem</p>
+//           <p>{data.discription}</p>
 //         </div> :
-//         <div>
-//           <Name />
-//           <h3>He's okay I guess</h3>
-//         </div>
+
+//         <h1>{name}</h1>
 //       }
 //     </>
 //   )
@@ -153,28 +165,31 @@ import React, { useState } from 'react'
 // THEN PASS OUR COMPONENT INTO THIS "IF" COMPONENT TO BE RENDERED IF THE CONDITIONAL IS TRUE
 //--------------------------------------------------------------
 
-name = "Sam the man"
+// const If = ({conditional, children}) => {
+//   console.log(conditional)
+//   if(conditional) {return children}
+//   return null
+// }
 
-const If = ({conditional, children}) => {
-  if(conditional) {return children}
-  return null
-}
+// name = "Sam the Man"
 
-function App() {
-  const [renderCheck, setRenderCheck] = useState(name)
-  console.log(renderCheck)
-  return (
-    <>
-      <button onClick={() => setRenderCheck(!renderCheck)}>Change State</button>
-      <If conditional={renderCheck}>
-        <Name />
-        <p>lksadflj</p>
-      </If>
-    </>
-  )
-}
+// function App() {
 
-export default App;
+//   const [dataLoaded, setDataLoaded] = useState(name)
+
+//   return (
+//     <>
+//       <button onClick={() => setDataLoaded(!dataLoaded)}>Change State</button>
+
+//       <If conditional={dataLoaded}>
+//         <Name />
+//         <p>This is extra text</p>
+//       </If>
+//     </>
+//   )
+// }
+
+// export default App;
 
 //--------------------------------------------------------------
 // LASTLY WE CAN USE HIGHER ORDER COMPONENTS (HOC) TO DO CONIDITIONAL RENDERING BUT WE WILL GO OVER THESE LATER :)
