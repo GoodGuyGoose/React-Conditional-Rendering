@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react'
 import React, { useState } from 'react'
 import './styles.css'
 
@@ -22,20 +21,20 @@ import './styles.css'
 // CONDITIONAL RENDERING WITH CLASSIC IF/ELSE STATEMENT
 //--------------------------------------------------------------
 
-export default function App() {
+// export default function App() {
 
-  if(name === "") {
-    return <h3>name is empty string!</h3>
-  }
+//   if(name === "") {
+//     return <h3>name is empty string!</h3>
+//   }
 
-  else {
-    return (
-      <div className="App">
-        <Name />
-      </div>
-    )
-  }
-}
+//   else {
+//     return (
+//       <div className="App">
+//         <Name />
+//       </div>
+//     )
+//   }
+// }
 
 //--------------------------------------------------------------
 // WE CAN WRITE ALMOST THE EXACT SAME CODE BUT WITH A GUARD CLAUSE TO MAKE IT A BIT CLEANER
@@ -43,8 +42,8 @@ export default function App() {
 // name = ''
 
 // function App() {
-//   if(!name) {return <h3>Guard Clause render -- name is missing</h3>}
-//   if(name === "Bill") {return <h3>This is the render for billiboy</h3>}
+//   if(name === '') return <h3>Guard Clause render -- name is missing</h3>
+//   if(name === "Bill") return <h3>This is the render for billiboy</h3>
 
 //   return (
 //     <div className="App">
@@ -57,8 +56,9 @@ export default function App() {
 // export default App;
 
 //--------------------------------------------------------------
-// NOTE: the above examples are bad practice.  Can anyone tell me why?
+// NOTE: we can simplify our coniditional check on line 45, can anyone tell me how?
 //--------------------------------------------------------------
+
 //--------------------------------------------------------------
 // USE A CONDITIONAL TO SET A VARIABLE TO BE RENDERED LATER
 //--------------------------------------------------------------
@@ -73,7 +73,7 @@ export default function App() {
 //   if(!name) {
 //     renderedVar = <h2 style={{color: "red"}}>there was an error </h2>
 //   } else {
-//     renderedVar = <h3><Name /><h3>This our our variable to be rendered</h3></>
+//     renderedVar = <><Name /><h3>This our our variable to be rendered</h3></>
 //   }
 
 
@@ -87,7 +87,7 @@ export default function App() {
 // export default App;
 
 //--------------------------------------------------------------
-// WE CAN NOT USE IF/ELSE INSIDE OUR JSX SO WE NEED TO USE TERNARY OPERAOTRS INSTEAD (X ? Y : Z)
+// WE CAN NOT USE IF/ELSE INSIDE OUR JSX (inside the return statement) SO WE NEED TO USE TERNARY OPERAOTRS INSTEAD (X ? Y : Z)
 // THE TERNARY RECIEVES A BOOLEAN FROM BEOFRE THE QUESTION MARK, IF TRUE IT WILL EXECUTE THE CODE IN FRONT OF THE : , IF FALSE IT
 // WILL EXECUTE THE CODE WHICH COMES AFTER 
 //--------------------------------------------------------------
@@ -97,6 +97,7 @@ export default function App() {
 // function App() {
   
 //   return (
+
 //     <div className="App">
 //       {name ? <Name /> : <h3>No Name</h3> }
 //     </div>
@@ -115,7 +116,7 @@ export default function App() {
 //   return (
 //     <div className="App">
 //       {
-//         !dataLoaded ? 
+//         !name ? 
 //         <h2>For god's sake please add a name</h2> : 
 //         name === "Gustav" ? 
 //         <div><Name /><h1>What a guy!!!</h1></div> :
@@ -132,33 +133,38 @@ export default function App() {
 // IS IS ALSO VERY USEFUL WHEN RERENDERING A PORTION OF OUR PAGE BUT NOT ALL OF IT
 // --------------------------------------------------------------
 
+let userInfo
 
-// function App() {
-//   return (
-//     <div className="App">
-//       {isLoaded ? <NameSection  data={pokeData} /> : null}
-//     </div>
-//   )
-// }
+userInfo = {
+  name: 'bill',
+  discription: 'Bill was a happy boy cuz bill had a lot of joy'
+}
 
-// const NameSection = ({data}) => {
-//   return (
-//     <>
-//       {discription ? 
-      
-//         <div>
-//           <h1>{data.name}</h1>
-//           <h1>What a guy!!!</h1>
-//           <p>{data.discription}</p>
-//         </div> :
+function App() {
+  return (
+    <div className="App">
+      {userInfo ? <NameSection  info={userInfo} /> : <h3>Please log in :)</h3>}
+    </div>
+  )
+}
 
-//         <h1>{name}</h1>
-//       }
-//     </>
-//   )
-// }
+const NameSection = ({info}) => {
+  return (
+    <>
+      {info.discription ? 
+        <>
+          <h1>{info.name}</h1>
+          <p>{info.discription}</p>
+        </> :
+        <>
+          <h1>{info.name}</h1>
+        </>
+      }
+    </>
+  )
+}
 
-//  export default App;
+ export default App;
 
 //--------------------------------------------------------------
 // WE CAN ALSO USE IF COMPONENTS THAT ACCEPTS A CONDITIONAL PROP THAT SHOWS IF WE SHOULD RENDER SOMETHING.  WE 
